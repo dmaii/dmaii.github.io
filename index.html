@@ -5,6 +5,12 @@
   <style type="text/css">
     body {
       background-color: black;
+      color: white;
+      font-family: PressStart2P;
+    }
+
+    h1 {
+      font-size: 40px;
     }
 
     canvas {
@@ -16,8 +22,32 @@
       display: block;
       width: 800px;
     }
+
+    a {
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+    }
+
+    @font-face {
+      font-family: PressStart2P;
+      src: url('PressStart2P.ttf')
+    }
   </style>
   <body>
     <canvas width="500" height="320"></canvas>
+    <header class='container'>
+      <h1>David Mai</h1>
+    </header>
+    <section class='container'>
+      <span>
+        <a href="https://s3.amazonaws.com/random-stuff-wutwutwut/david-mai-resume.pdf">Resume</a> |
+        <a href="https://www.github.com/suisha">Github</a> |
+        <a href="mailto:gs9600@gmail.com">Email</a>
+      </span>
+    </section>
   </body>
 </html>

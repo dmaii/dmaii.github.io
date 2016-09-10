@@ -101,7 +101,7 @@ function Block(x, y) {
   this.y = y;
 
   this.width = 100;
-  this.height = 20;
+  this.height = 30;
 
   this.block = true;
   this.color = getRandomColor();
@@ -177,12 +177,12 @@ function draw(context) {
 
   if (ball.y === HEIGHT) {
     clearInterval(intervalID);
-    alert('u lose');
+    //alert('game over :( refresh to try again!');
   }
 
   if (blockCount === 0) {
     clearInterval(intervalID);
-    alert('u win!');
+    alert('you win! :)');
   }
 }
 
