@@ -3,20 +3,7 @@
   <script src="./script/jquery.hotkeys.js"></script>
   <script src="./script/game.js"></script>
   <script type="text/javascript">
-    (function(win, doc) {
-        if (win.rdt)
-            return;
-
-        var p = win.rdt = function() {
-            p.sendEvent ? p.sendEvent.apply(p, arguments) : p.callQueue.push(arguments);
-        }
-
-        p.callQueue = [];
-        var scriptTag = doc.createElement('script');
-        scriptTag.src = 'https://s3.amazonaws.com/reddit-conversion-pixel-statics/v1/index.js';
-    })(window, document);
-    rdt('init', 'pixel id', 'iHdpnxXx8W5CfvWKwetR75EWKm1n-Lvz1WuBUEE2jfA=');
-    rdt('track', 'PageView');
+    alert('foo');
   </script>
   <style type="text/css">
     body {
