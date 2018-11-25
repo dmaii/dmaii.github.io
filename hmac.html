@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <style type="text/css">
+      #success {
+        display: none;
+        color: green; 
+      }
+
+      #fail {
+        display: none;
+        color: red;
+      }
+    </style>
+  </head>
+<div id="success">
+  Success!
+</div>
+<div id="fail">
+  Failure
+</div>
+<script type="text/javascript">
+  function ParsedUrl(url) {
+    var parser = document.createElement("a");
+    parser.href = url;
+    
+    // IE 8 and 9 dont load the attributes "protocol" and "host" in case the source URL
+    // is just a pathname, that is, "/example" and not "http://domain.com/example".
+    parser.href = parser.href;
+    
+    // IE 7 and 6 wont load "protocol" and "host" even with the above workaround,
+    // so we take the protocol/host from window.location and place them manually
+    if (parser.host === "") {
+      var newProtocolAndHost = window.location.protocol + "//" + window.location.host;
+      if (url.charAt(1) === "/") {
+        parser.href = newProtocolAndHost + url;
+      } else {
+        // the regex gets everything up to the last "/"
+        // /path/takesEverythingUpToAndIncludingTheLastForwardSlash/thisIsIgnored
+        // "/" is inserted before because IE takes it of from pathname
+        var currentFolder = ("/"+parser.pathname).match(/.*\//)[0];
+        parser.href = newProtocolAndHost + currentFolder + url;
+      }
+    }
+    
+    // copies all the properties to this object
+    var properties = ['host', 'hostname', 'hash', 'href', 'port', 'protocol', 'search'];
+    for (var i = 0, n = properties.length; i < n; i++) {
+      this[properties[i]] = parser[properties[i]];
+    }
+    
+    // pathname is special because IE takes the "/" of the starting of pathname
+    this.pathname = (parser.pathname.charAt(0) !== "/" ? "/" : "") + parser.pathname;
+  }
+
+  function getQueryVariable(query, variable) {
+      var vars = query.slice(1).split('&');
+      for (var i = 0; i < vars.length; i++) {
+          var pair = vars[i].split('=');
+          if (decodeURIComponent(pair[0]) == variable) {
+              return decodeURIComponent(pair[1]);
+          }
+      }
+      console.log('Query variable %s not found', variable);
+  }
+
+  const createHmac = (data, key) => {
+    const hash = CryptoJS.HmacSHA256(data, key);
+    return CryptoJS.enc.Base64.stringify(hash);
+  };
+
+  window.Image = function () {
+    window.img = this;
+  };
+
+  !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','t2_11qnzrqv');rdt('track', 'PageVisit');
+
+  setInterval(function () {
+    if (window.img && window.img.src) {
+      var search = new ParsedUrl(window.img.src).search
+      var ts = getQueryVariable(search, 'ts')
+      var correctHash = createHmac('t2_11qnzrqv' + 'PageVisit' + ts, 'redditadsrocks');
+      var correctSearch = '?ts=' + ts + '&id=t2_11qnzrqv&event=PageVisit&s=' + encodeURIComponent(correctHash);
+      
+      if (search === correctSearch) {
+        document.getElementById('success').style.display = 'block';
+      } else {
+        document.getElementById('fail').style.display = 'block';
+      }
+    }
+  }, 1000)
+</script>
+
+</html>
