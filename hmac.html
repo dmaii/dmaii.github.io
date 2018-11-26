@@ -65,8 +65,8 @@
       console.log('Query variable %s not found', variable);
   }
 
-  const createHmac = function(data, key) {
-    const hash = CryptoJS.HmacSHA256(data, key);
+  var createHmac = function(data, key) {
+    var hash = CryptoJS.HmacSHA256(data, key);
     return CryptoJS.enc.Base64.stringify(hash);
   };
 
